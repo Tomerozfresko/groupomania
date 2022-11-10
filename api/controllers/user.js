@@ -1,5 +1,4 @@
 import { db } from "../connect.js";
-import jwt from "jsonwebtoken";
 
 export const getUser = (req, res) => {
   const userId = req.params.userId;
@@ -13,39 +12,25 @@ export const getUser = (req, res) => {
 };
 
 export const updateUser = (req, res) => {
-  const token = req.cookies.accessToken;
-  if (!token) return res.status(401).json("Not authenticated!");
+  const q = "UPDATE users SET `name`=?,`profilepicture`=? WHERE id=? ";
 
-  jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
-    if (err) return res.status(403).json("Token is not valid!");
-
-    const q = "UPDATE users SET `name`=?,`profilepicture`=? WHERE id=? ";
-
-    const values = [req.body.name, req.body.profilepicture, userInfo.id];
-    db.query(q, values, (err, data) => {
-      if (err) {
-        console.log(err);
-        res.status(500).json(err);
-      }
-      if (data.affectedRows > 0) return res.json("Updated!");
-      return res.status(403).json("You can update only your user!");
-    });
+  const values = [req.body.name, req.body.profilepicture, req.user.id];
+  db.query(q, values, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+    if (data.affectedRows > 0) return res.json("Updated!");
+    return res.status(403).json("You can update only your user!");
   });
 };
 
 export const deleteUser = (req, res) => {
-  const token = req.cookies.accessToken;
-  if (!token) return res.status(401).json("Not authenticated!");
+  const q = "DELETE FROM users WHERE id=?";
 
-  jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
-    if (err) return res.status(403).json("Token is not valid!");
-
-    const q = "DELETE FROM users WHERE id=?";
-
-    db.query(q, [userInfo.id], (err, data) => {
-      if (err) res.status(500).json(err);
-      if (data.affectedRows > 0) return res.json("User is Deleted!");
-      return res.status(403).json("You can delete only your user!");
-    });
+  db.query(q, [req.user.id], (err, data) => {
+    if (err) res.status(500).json(err);
+    if (data.affectedRows > 0) return res.json("User is Deleted!");
+    return res.status(403).json("You can delete only your user!");
   });
 };

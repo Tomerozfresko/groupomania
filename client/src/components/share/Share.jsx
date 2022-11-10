@@ -14,22 +14,17 @@ const Share = () => {
   const [desc, setDesc] = useState("");
   const { currentUser } = useContext(AuthContext);
 
-  const { isLoading, error, data } = useQuery(["share"], () =>
-    makeRequest.get("/users/find/" + currentUser.id).then((res) => {
+  const { isLoading, error, data } = useQuery(["share"], async () =>
+    await makeRequest.get("/users/find/" + currentUser.id).then((res) => {
       return res.data;
     }));
 
-
-
   const upload = async () => {
-
-    // upload the file to the server
-
     try {
       const formData = new FormData();
       formData.append("file", file);
       const res = await makeRequest.post("/upload", formData);
-      return res.data;// get the IMG name from the server
+      return res.data;
     } catch (err) {
       console.log(err);
     }
@@ -38,7 +33,6 @@ const Share = () => {
   const queryClient = useQueryClient();
 
   //define mutation method
-
   const mutation = useMutation(
     (newPost) => {
       return makeRequest.post("/posts", newPost);
@@ -67,7 +61,7 @@ const Share = () => {
   };
 
   if (error) { return "Something went wrong" };
-  if (isLoading) { return "Loading..." }
+  if (isLoading) { return "" }
 
 
   return (
@@ -78,7 +72,7 @@ const Share = () => {
             <img src={data.profilepicture.slice(0, 4) === "http" ? data.profilepicture : "/upload/" + data.profilepicture} alt="" />
             <input
               type="text"
-              placeholder={`What's on your mind ${currentUser.name}?`}
+              placeholder={`What's on your mind ${data.name}?`}
               onChange={(e) => setDesc(e.target.value)}
               value={desc}
             />
@@ -92,7 +86,7 @@ const Share = () => {
         <hr />
         <div className="bottom">
           <div className="left">
-            <input type="file" id="file" style={{ display: "none" }} onChange={(e) => { setFile(e.target.files[0]); console.log(e.target.files[0]) }} />
+            <input type="file" id="file" style={{ display: "none" }} onChange={(e) => { setFile(e.target.files[0]) }} />
             <label htmlFor="file">
               <div className="item">
                 <img src={Image} alt="" />

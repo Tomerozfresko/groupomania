@@ -4,8 +4,8 @@ import jwt from "jsonwebtoken";
 
 export const register = (req, res) => {
   // user already exists?
-
   const q = "SELECT * FROM users WHERE username = ?";
+
   const username = [req.body.username];
 
   db.query(q, username, async (err, data) => {
@@ -19,12 +19,15 @@ export const register = (req, res) => {
     // create new user
     const q =
       "INSERT INTO users (username, email,password,name,profilepicture) VALUES (?)";
+
+    const nameAvatar = `https://ui-avatars.com/api/?name=${req.body.name}`;
+
     const values = [
       req.body.username,
       req.body.email,
       hashedPassword,
       req.body.name,
-      `https://ui-avatars.com/api/?name=${req.body.name}`,
+      nameAvatar,
     ];
 
     db.query(q, [values], (err, result) => {
@@ -35,7 +38,6 @@ export const register = (req, res) => {
 };
 
 export const login = (req, res) => {
-
   const q = "SELECT * FROM users WHERE username = ?";
   const username = [req.body.username];
 
@@ -58,7 +60,7 @@ export const login = (req, res) => {
     // will not return the hashedPassword, this is is a better practise
     const { password, ...other } = data[0];
 
-    // TODO Is it better to host token in localSTORAGE OR AS COOKIE ?
+    // TODO Is it better to host token in localSTORAGE OR as COOKIE ?
     res
       .cookie("accessToken", token, {
         httpOnly: true,

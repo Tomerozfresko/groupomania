@@ -56,9 +56,9 @@ const Comments = ({ postId }) => {
 
 
   if (error) return "Something went wrong";
-  if (isLoading) return "Loading...";
+  if (isLoading) return "";
   if (errorUser) return "Something went wrong with user";
-  if (loadingUser) return "Loading User...";
+  if (loadingUser) return "";
 
   return (
     <div className="comments">
@@ -75,7 +75,7 @@ const Comments = ({ postId }) => {
       {error
         ? "Something went wrong"
         : isLoading
-          ? "loading"
+          ? ""
           : data.map((comment) => (
             <div className="comment" key={comment.id}>
               <img src={comment.profilepicture.slice(0, 4) === "http" ? comment.profilepicture : "/upload/" + comment.profilepicture} alt="" />

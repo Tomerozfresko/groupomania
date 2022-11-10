@@ -13,7 +13,6 @@ const Update = ({ setOpenUpdate, user }) => {
   });
 
   const upload = async (file) => {
-    console.log(file)
     try {
       const formData = new FormData();
       formData.append("file", file);
@@ -37,19 +36,23 @@ const Update = ({ setOpenUpdate, user }) => {
     {
       onSuccess: () => {
         // Invalidate and refetch
-        queryClient.invalidateQueries(["user"], ["posts"], ["comments"], ["share"]);
+        queryClient.invalidateQueries(["user"]);
       },
     }
   );
 
+  const updateCurrentUser = () => {
+    localStorage.setItem("mytime2", Date.now());
+  }
+
   const handleClick = async (e) => {
     e.preventDefault();
+    updateCurrentUser()
 
     //TODO: find a better way to get image URL
 
     // let coverUrl;
     let profileUrl;
-    // coverUrl = cover ? await upload(cover) : user.coverpic;
     profileUrl = profile ? await upload(profile) : user.profilepicture;
 
     mutation.mutate({ ...texts, profilepicture: profileUrl });
@@ -121,7 +124,6 @@ const Update = ({ setOpenUpdate, user }) => {
       </div>
     </div>
   );
-
 };
 
 export default Update;
