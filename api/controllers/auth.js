@@ -1,0 +1,75 @@
+import { db } from "../connect.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+
+export const register = (req, res) => {
+  // user already exists?
+
+  const q = "SELECT * FROM users WHERE username = ?";
+  const username = [req.body.username];
+
+  db.query(q, username, async (err, data) => {
+    if (err) return res.status(500).json({ message: "Something went wrong" });
+    if (data.length)
+      return res.status(409).json({ message: "User already exists" });
+
+    // hash password
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    // create new user
+    const q =
+      "INSERT INTO users (username, email,password,name,profilepicture) VALUES (?)";
+    const values = [
+      req.body.username,
+      req.body.email,
+      hashedPassword,
+      req.body.name,
+      `https://ui-avatars.com/api/?name=${req.body.name}`,
+    ];
+
+    db.query(q, [values], (err, result) => {
+      if (err) return res.status(500).json(err);
+      res.status(200).json({ message: "User created" });
+    });
+  });
+};
+
+export const login = (req, res) => {
+
+  const q = "SELECT * FROM users WHERE username = ?";
+  const username = [req.body.username];
+
+  db.query(q, username, (err, data) => {
+    if (err) return res.status(500).json({ messagee: "Something went wrong" });
+    if (data.length === 0)
+      return res.status(404).json({ message: "User not found" });
+
+    // check password
+    const validPassword = bcrypt.compareSync(
+      req.body.password,
+      data[0].password
+    );
+    if (!validPassword)
+      return res.status(401).json({ message: "Invalid password" });
+
+    // create and assign token
+    const token = jwt.sign({ id: data[0].id }, process.env.SECRET_KEY);
+
+    // will not return the hashedPassword, this is is a better practise
+    const { password, ...other } = data[0];
+
+    // TODO Is it better to host token in localSTORAGE OR AS COOKIE ?
+    res
+      .cookie("accessToken", token, {
+        httpOnly: true,
+        sameSite: "none",
+        secure: true,
+      })
+      .status(200)
+      .json(other);
+  });
+};
+
+export const logout = (req, res) => {
+  res.clearCookie("accessToken").status(200).json("User has been logged out.");
+};

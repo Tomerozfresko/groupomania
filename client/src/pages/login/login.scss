@@ -1,0 +1,100 @@
+@import "../../style.scss";
+
+.login {
+  height: 100vh;
+  background-color: rgb(245, 226, 226);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .card {
+    // this holds the right and left side of the card
+    width: 70%;
+    display: flex;
+    background-color: white;
+    border-radius: 10px;
+    min-height: 600px;
+    overflow: hidden;
+
+    .left {
+      flex: 3;
+      background: linear-gradient(
+          rgba(240, 235, 235, 0.5),
+          rgba(168, 62, 92, 0.5)
+        ),
+        url("https://images.pexels.com/photos/1367269/pexels-photo-1367269.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2")
+          center;
+      background-size: cover;
+      padding: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
+      color: white;
+
+      @include mobile {
+        display: none;
+      }
+
+      h1 {
+        font-size: 50px;
+        line-height: 100px;
+      }
+
+      span {
+        font-size: 14px;
+      }
+
+      button {
+        width: 50%;
+        padding: 10px;
+        border: none;
+        background-color: white;
+        color: #ff0000;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    }
+
+    .right {
+      flex: 1;
+      align-items: center;
+      padding: 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+      justify-content: center;
+
+      h1 {
+        color: #555;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        input {
+          border: none;
+          border-bottom: 1px solid lightgray;
+          padding: 20px 10px;
+        }
+
+        button {
+          width: 50%;
+          padding: 10px;
+          border: none;
+          background-color: #ff0000;
+          color: white;
+          font-weight: bold;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.err {
+  font-size: 0.8rem;
+  color: rgba(#ff0000, 0.8);
+}
