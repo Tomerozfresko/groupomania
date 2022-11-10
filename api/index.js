@@ -42,3 +42,6 @@ app.use("/api/upload", uploadRoutes);
 app.listen(PORT, () => {
   console.log(`server is listening on port ${PORT}`);
 });
+
+
+//gitignore
