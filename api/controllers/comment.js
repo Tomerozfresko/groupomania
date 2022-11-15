@@ -1,5 +1,4 @@
 import { db } from "../connect.js";
-import jwt from "jsonwebtoken";
 import moment from "moment";
 
 export const getComments = (req, res) => {
@@ -35,7 +34,7 @@ export const deleteComment = (req, res) => {
 
   db.query(q, [commentId, req.user.id], (err, data) => {
     if (err) return res.status(500).json(err);
-    if (data.affectedRows > 0) return res.json("Comment has been deleted!");
+    if (data.affectedRows > 0) return res.json("Comment deleted!");
     return res.status(403).json("You can delete only your comment!");
   });
 };

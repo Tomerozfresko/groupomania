@@ -16,7 +16,8 @@ export const register = (req, res) => {
     // hash password
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
-    // create new user
+
+    // create new user, provide initials avatar since the profile img yet to be choosen by the user
     const q =
       "INSERT INTO users (username, email,password,name,profilepicture) VALUES (?)";
 
@@ -60,7 +61,6 @@ export const login = (req, res) => {
     // will not return the hashedPassword, this is is a better practise
     const { password, ...other } = data[0];
 
-    // TODO Is it better to host token in localSTORAGE OR as COOKIE ?
     res
       .cookie("accessToken", token, {
         httpOnly: true,

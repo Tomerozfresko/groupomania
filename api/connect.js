@@ -1,10 +1,12 @@
 import mysql from "mysql";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 export const db = mysql.createConnection({
-  host: "groupomaniamysql.cajwv1x06s8c.eu-west-3.rds.amazonaws.com",
+  host: process.env.HOST,
   user: "admin",
-  password: "1QcK4AcH5td2xxyfsEw7",
-  database: "groupomania",
+  password: process.env.PASSWORD,
+  database: process.env.DB,
 });
 
 // Check connection

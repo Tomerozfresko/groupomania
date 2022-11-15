@@ -1,5 +1,4 @@
 import { db } from "../connect.js";
-import jwt from "jsonwebtoken";
 import moment from "moment";
 import fs from "fs";
 
@@ -38,7 +37,7 @@ export const deletePost = (req, res) => {
   db.query(qImg, req.params.id, (err, data) => {
     if (err) return res.status(500).json(err);
     const img = data[0].img;
-    // if there is an img, delete it
+    // if there is an img, delete it from folder
     if (img) {
       fs.unlink(`../client/public/upload/${img}`, (err) => {
         if (err) return res.status(500).json(err);
