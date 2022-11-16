@@ -57,7 +57,7 @@ const Share = () => {
     try {
       if (file) imgUrl = await upload();
     } catch (error) {
-      console.error("Could not upload file");
+      alert("Could not upload file");
     }
 
     mutation.mutate({ desc, img: imgUrl });
