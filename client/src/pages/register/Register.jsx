@@ -1,46 +1,42 @@
 import { Link } from "react-router-dom";
-import { useFormik } from 'formik';
+import { useFormik } from "formik";
 import { useState, useContext } from "react";
 import { AuthContext } from "../../context/authContext";
-import * as Yup from 'yup';
+import * as Yup from "yup";
 import "./register.scss";
 
 const Register = () => {
-
   const { register } = useContext(AuthContext);
   const [error, setError] = useState(null);
 
   const formik = useFormik({
     initialValues: {
-      username: '',
-      email: '',
-      password: '',
-      name: '',
-    }, validationSchema: Yup.object({
-      username: Yup
-        .string()
-        .max(15, 'Username must be 15 characters or less')
-        .min(4, 'Username must be more then 4 characters')
-        .required('Username is required'),
-      email: Yup
-        .string()
-        .email('Invalid email address')
-        .required('Email is required'),
-      password: Yup
-        .string()
-        .max(20, 'Password must be 20 characters or less')
-        .min(4, 'Password must be more then 4 characters')
-        .trim('Cannot contain spaces')
-        .required('Password is required'),
-      name: Yup
-        .string()
-        .max(15, 'Must be 15 characters or less')
-        .min(4, 'Name must be more then 4 characters')
-        .required('Name is required'),
+      username: "",
+      email: "",
+      password: "",
+      name: "",
+    },
+    validationSchema: Yup.object({
+      username: Yup.string()
+        .max(15, "Username must be 15 characters or less")
+        .min(4, "Username must be more then 4 characters")
+        .required("Username is required"),
+      email: Yup.string()
+        .email("Invalid email address")
+        .required("Email is required"),
+      password: Yup.string()
+        .max(20, "Password must be 20 characters or less")
+        .min(4, "Password must be more then 4 characters")
+        .trim("Cannot contain spaces")
+        .required("Password is required"),
+      name: Yup.string()
+        .max(15, "Must be 15 characters or less")
+        .min(4, "Name must be more then 4 characters")
+        .required("Name is required"),
     }),
     onSubmit: async (values) => {
       try {
-        await register(values)
+        await register(values);
       } catch (error) {
         setError(error.response.data.message);
       }
@@ -48,7 +44,7 @@ const Register = () => {
   });
 
   return (
-    <div className="register" >
+    <main className="register">
       <div className="card">
         <div className="left">
           <h1>Groupomania</h1>
@@ -113,7 +109,7 @@ const Register = () => {
           </form>
         </div>
       </div>
-    </div >
+    </main>
   );
 };
 

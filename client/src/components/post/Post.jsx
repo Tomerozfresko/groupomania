@@ -80,7 +80,7 @@ const Post = ({ post }) => {
   };
 
   return (
-    <div className="post">
+    <article className="post">
       <div className="container">
         <div className="user">
           <div className="userInfo">
@@ -124,7 +124,7 @@ const Post = ({ post }) => {
         </div>
         {commentOpen && <Comments postId={post.id} />}
       </div>
-    </div>
+    </article>
   );
 };
 

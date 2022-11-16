@@ -35,7 +35,7 @@ const Login = () => {
   });
 
   return (
-    <div className="login">
+    <main className="login">
       <div className="card">
         <div className="left">
           <h1>Groupomania</h1>
@@ -77,7 +77,7 @@ const Login = () => {
           </form>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 export default Login;

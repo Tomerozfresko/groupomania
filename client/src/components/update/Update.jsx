@@ -43,11 +43,11 @@ const Update = ({ setOpenUpdate, user }) => {
 
   const updateCurrentUser = () => {
     localStorage.setItem("mytime2", Date.now());
-  }
+  };
 
   const handleClick = async (e) => {
     e.preventDefault();
-    updateCurrentUser()
+    updateCurrentUser();
 
     //TODO: find a better way to get image URL
 
@@ -58,17 +58,17 @@ const Update = ({ setOpenUpdate, user }) => {
     mutation.mutate({ ...texts, profilepicture: profileUrl });
     setOpenUpdate(false);
     setProfile(null);
-  }
+  };
 
   const handleDelete = async (e) => {
     e.preventDefault();
-    alert("Are you sure you want to delete your account?")
+    alert("Are you sure you want to delete your account?");
     makeRequest.delete("/users/user.id");
     window.location.replace("/register");
-  }
+  };
 
   return (
-    <div className="update">
+    <section className="update">
       <div className="wrapper">
         <h1>Update Your Profile</h1>
         <form>
@@ -80,7 +80,9 @@ const Update = ({ setOpenUpdate, user }) => {
                   src={
                     profile
                       ? URL.createObjectURL(profile)
-                      : user.profilepicture.slice(0, 4) === "http" ? user.profilepicture : "/upload/" + user.profilepicture
+                      : user.profilepicture.slice(0, 4) === "http"
+                      ? user.profilepicture
+                      : "/upload/" + user.profilepicture
                   }
                   alt=""
                 />
@@ -122,9 +124,8 @@ const Update = ({ setOpenUpdate, user }) => {
           close
         </button>
       </div>
-    </div>
+    </section>
   );
 };
 
 export default Update;
-

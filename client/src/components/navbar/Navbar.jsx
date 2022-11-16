@@ -27,7 +27,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className="navbar">
+    <nav className="navbar">
       <div className="left">
         <img src={logo} alt="" />
       </div>
@@ -46,7 +46,7 @@ const Navbar = () => {
         <LogoutIcon onClick={logout} />
       </div>
       {openUpdate && <Update setOpenUpdate={setOpenUpdate} user={data} />}
-    </div>
+    </nav>
   );
 };
 
