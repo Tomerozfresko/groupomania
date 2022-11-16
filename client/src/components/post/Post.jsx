@@ -12,6 +12,7 @@ import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const Post = ({ post }) => {
+  console.log(post);
   const [commentOpen, setCommentOpen] = useState(false);
 
   const { currentUser } = useContext(AuthContext);
@@ -83,14 +84,16 @@ const Post = ({ post }) => {
       <div className="container">
         <div className="user">
           <div className="userInfo">
-            <img src={"/upload/" + post.profilepicture} alt="" />
+            <img
+              src={
+                post.profilepicture.slice(0, 4) === "http"
+                  ? post.profilepicture
+                  : "/upload/" + post.profilepicture
+              }
+              alt=""
+            />
             <div className="details">
-              <Link
-                to={`/profile/${post.userId}`}
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                <span className="name">{post.name}</span>
-              </Link>
+              <span className="name">{post.name}</span>
               <span className="date">{moment(post.createdAt).fromNow()}</span>
             </div>
           </div>
