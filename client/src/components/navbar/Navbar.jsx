@@ -1,6 +1,5 @@
 import "./navbar.scss";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import Update from "../update/Update";
@@ -9,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import logo from "../../assets/logo.svg";
 
 const Navbar = () => {
+  
   const { currentUser, logout } = useContext(AuthContext);
 
   const [openUpdate, setOpenUpdate] = useState(false);

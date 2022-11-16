@@ -1,4 +1,3 @@
-import { useState, CSSProperties } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import Post from "../post/Post";
 import { useQuery } from "@tanstack/react-query";

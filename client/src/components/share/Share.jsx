@@ -5,6 +5,7 @@ import { AuthContext } from "../../context/authContext";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
+import upload from "../../upload";
 
 const Share = () => {
   const [file, setFile] = useState(null); // will hold the file
@@ -21,16 +22,16 @@ const Share = () => {
       })
   );
 
-  const upload = async () => {
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-      const res = await makeRequest.post("/upload", formData);
-      return res.data;
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const upload = async () => {
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("file", file);
+  //     const res = await makeRequest.post("/upload", formData);
+  //     return res.data;
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   const queryClient = useQueryClient();
 
@@ -55,7 +56,7 @@ const Share = () => {
       return setNoDesc("Please enter a description or upload a file");
 
     try {
-      if (file) imgUrl = await upload();
+      if (file) imgUrl = await upload(file);
     } catch (error) {
       alert("Could not upload file");
     }
