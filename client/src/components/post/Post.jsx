@@ -107,9 +107,9 @@ const Post = ({ post }) => {
         <div className="info">
           <button className="item">
             {data.includes(currentUser.id) ? (
-                <FavoriteOutlinedIcon onClick={handleLike} />
+              <FavoriteOutlinedIcon onClick={handleLike} />
             ) : (
-                <FavoriteBorderOutlinedIcon onClick={handleLike} />
+              <FavoriteBorderOutlinedIcon onClick={handleLike} />
             )}
             {data.length} Likes
           </button>
