@@ -9,29 +9,30 @@ import moment from "moment";
 import { makeRequest } from "../../axios";
 import { AuthContext } from "../../context/authContext";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const Post = ({ post }) => {
   const [commentOpen, setCommentOpen] = useState(false);
 
   const { currentUser } = useContext(AuthContext);
 
-  const { isLoading, error, data } = useQuery(['likes', post.id], async () => {
-    const res = await makeRequest.get("/likes?postId=" + post.id)
+  const { isLoading, error, data } = useQuery(["likes", post.id], async () => {
+    const res = await makeRequest.get("/likes?postId=" + post.id);
     return res.data;
-  }
-  );
+  });
 
-  const { isLoading: loadingComments, error: errorComments, data: comments } = useQuery(['comments', post.id], async () => {
-    const res = await makeRequest.get("/comments?postId=" + post.id)
+  const {
+    isLoading: loadingComments,
+    error: errorComments,
+    data: comments,
+  } = useQuery(["comments", post.id], async () => {
+    const res = await makeRequest.get("/comments?postId=" + post.id);
     return res.data;
-  }
-  );
-
+  });
 
   const queryClient = useQueryClient();
 
-  // likes mutation 
+  // likes mutation
   const mutation = useMutation(
     (liked) => {
       if (liked) return makeRequest.delete("/likes?postId=" + post.id);
@@ -60,10 +61,18 @@ const Post = ({ post }) => {
     mutation.mutate(data.includes(currentUser.id));
   };
 
-  if (error) { return "Something went wrong" };
-  if (isLoading) { return "Loading..." }
-  if (errorComments) { return "Something went wrong" };
-  if (loadingComments) { return "Loading..." }
+  if (error) {
+    return "Something went wrong";
+  }
+  if (isLoading) {
+    return "Loading...";
+  }
+  if (errorComments) {
+    return "Something went wrong";
+  }
+  if (loadingComments) {
+    return "Loading...";
+  }
 
   const handleDelete = () => {
     deleteMutation.mutate(post.id);
@@ -86,7 +95,9 @@ const Post = ({ post }) => {
             </div>
           </div>
           {post.userId === currentUser.id && (
-            <DeleteIcon onClick={handleDelete}>delete</DeleteIcon>
+            <button classname="deleteButton">
+              <DeleteIcon onClick={handleDelete}>delete</DeleteIcon>
+            </button>
           )}
         </div>
         <div className="content">
@@ -94,16 +105,19 @@ const Post = ({ post }) => {
           <img src={"./upload/" + post.img} alt="" />
         </div>
         <div className="info">
-          <div className="item">
-            {data.includes(currentUser.id) ? <FavoriteOutlinedIcon onClick={handleLike} /> : <FavoriteBorderOutlinedIcon onClick={handleLike} />}
+          <button className="item">
+            {data.includes(currentUser.id) ? (
+                <FavoriteOutlinedIcon onClick={handleLike} />
+            ) : (
+                <FavoriteBorderOutlinedIcon onClick={handleLike} />
+            )}
             {data.length} Likes
-          </div>
-          <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
+          </button>
+          <button className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <TextsmsOutlinedIcon />
             {comments.length} Comments
-          </div>
-          <div className="item">
-          </div>
+          </button>
+          <div className="item"></div>
         </div>
         {commentOpen && <Comments postId={post.id} />}
       </div>

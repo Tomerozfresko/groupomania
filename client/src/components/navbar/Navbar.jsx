@@ -29,13 +29,13 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="right">
-        <div className="user" onClick={() => setOpenUpdate(true)}>
+        <button className="user" onClick={() => setOpenUpdate(true)}>
           <img
             src={data.profilepicture.slice(0, 4) === "http" ? data.profilepicture : "/upload/" + data.profilepicture}
             alt=""
           />
           <span>{currentUser.name}</span>
-        </div>
+        </button>
         <LogoutIcon onClick={logout} />
       </div>
       {openUpdate && <Update setOpenUpdate={setOpenUpdate} user={data} />}
