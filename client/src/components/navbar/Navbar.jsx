@@ -6,7 +6,7 @@ import { AuthContext } from "../../context/authContext";
 import Update from "../update/Update";
 import { makeRequest } from "../../axios";
 import { useQuery } from "@tanstack/react-query";
-import logo from "../../assets/icon.png";
+import logo from "../../assets/logo.svg";
 
 const Navbar = () => {
   const { currentUser, logout } = useContext(AuthContext);
@@ -29,8 +29,7 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <div className="left">
-        <span>Groupomania</span>
-        {/* <img src={logo} alt="" /> */}
+        <img src={logo} alt="" />
       </div>
       <div className="right">
         <button className="user" onClick={() => setOpenUpdate(true)}>
