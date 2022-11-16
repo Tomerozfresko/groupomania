@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
+import { makeRequest } from "../axios";
 
 export const AuthContext = createContext();
 
@@ -18,9 +19,12 @@ export const AuthContextProvider = ({ children }) => {
   //   "https://api-kappa-snowy.vercel.app/api/auth/register";
 
   const login = async (inputs) => {
-    const res = await axios.post(devLoginPath, inputs, {
-      withCredentials: true,
-    });
+    // const res = await makeRequest.get("/comments?postId=" + post.id);
+    // const res = await axios.post(devLoginPath, inputs, {
+    //   withCredentials: true,
+    // });
+
+    const res = await makeRequest.post(devLoginPath, inputs);
     setCurrentUser(res.data);
     window.location.replace("/");
   };
