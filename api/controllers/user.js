@@ -14,15 +14,18 @@ export const getUser = (req, res) => {
 export const updateUser = (req, res) => {
   const q = "UPDATE users SET `name`=?,`profilepicture`=? WHERE id=? ";
 
-  const values = [req.body.name, req.body.profilepicture, req.user.id];
-  db.query(q, values, (err, data) => {
-    if (err) {
-      console.log(err);
-      res.status(500).json(err);
-    }
-    if (data.affectedRows > 0) return res.json("Updated!");
-    return res.status(403).json("You can update only your user!");
-  });
+  if (req.body.name || req.body.profilepicture || req.user.id) {
+    const values = [req.body.name, req.body.profilepicture, req.user.id];
+    db.query(q, values, (err, data) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json(err);
+      }
+      if (data.affectedRows > 0) return res.json("Updated!");
+      return res.status(403).json("You can update only your user!");
+    });
+  }
+  return;
 };
 
 export const deleteUser = (req, res) => {

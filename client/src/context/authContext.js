@@ -32,13 +32,13 @@ export const AuthContextProvider = ({ children }) => {
   const logout = async () => {
     localStorage.removeItem("user");
     window.location.replace("/login");
-    setCurrentUser(null);
+    return setCurrentUser(null);
   };
 
   const register = async (inputs) => {
     await axios.post(devRegisterPath, inputs);
     window.location.replace("/login");
-    setCurrentUser(null);
+    return setCurrentUser(null);
   };
 
   useEffect(() => {
