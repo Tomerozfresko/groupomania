@@ -8,7 +8,6 @@ import { useQuery } from "@tanstack/react-query";
 import logo from "../../assets/logo.svg";
 
 const Navbar = () => {
-  
   const { currentUser, logout } = useContext(AuthContext);
 
   const [openUpdate, setOpenUpdate] = useState(false);
@@ -29,7 +28,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="left">
-        <img src={logo} alt="" />
+        <img src={logo} alt="" style={{ height: "30px" }} />
       </div>
       <div className="right">
         <button className="user" onClick={() => setOpenUpdate(true)}>

@@ -92,15 +92,15 @@ const Post = ({ post }) => {
               alt=""
             />
             <div className="details">
+              {post.userId === currentUser.id && (
+                <button>
+                  <DeleteIcon onClick={handleDelete}>delete</DeleteIcon>
+                </button>
+              )}
               <span className="name">{post.name}</span>
               <span className="date">{moment(post.createdAt).fromNow()}</span>
             </div>
           </div>
-          {post.userId === currentUser.id && (
-            <button classname="deleteButton">
-              <DeleteIcon onClick={handleDelete}>delete</DeleteIcon>
-            </button>
-          )}
         </div>
         <div className="content">
           <p>{post.desc}</p>
