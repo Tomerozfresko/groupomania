@@ -1,3 +1,4 @@
 /node_modules
 **/*.env
 ../images
+/groupomania_presentation.pptx
