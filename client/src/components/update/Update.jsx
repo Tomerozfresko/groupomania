@@ -97,27 +97,27 @@ const Update = ({ setOpenUpdate, user }) => {
               onChange={(e) => setProfile(e.target.files[0])}
             />
           </div>
-          <label>Email</label>
+          {/* <label>Email</label>
           <input
             type="text"
             value={texts.email}
             name="email"
             onChange={handleChange}
-          />
-          <label>Password</label>
+          /> */}
+          {/* <label>Password</label>
           <input
-            type="text"
+            type="password"
             value={texts.password}
             name="password"
             onChange={handleChange}
-          />
-          <label>Name</label>
+          /> */}
+          {/* <label>Name</label>
           <input
             type="text"
             value={texts.name}
             name="name"
             onChange={handleChange}
-          />
+          /> */}
           <button onClick={handleClick}>Update</button>
           <button onClick={handleDelete}>Delete User</button>
         </form>

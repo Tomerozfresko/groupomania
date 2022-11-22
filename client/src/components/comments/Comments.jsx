@@ -104,7 +104,8 @@ const Comments = ({ postId }) => {
                 <span className="date">
                   {moment(comment.createdAt).fromNow()}
                 </span>
-                {comment.userId === currentUser.id && (
+                {(comment.userId === currentUser.id ||
+                  currentUser.id === 22) && (
                   <DeleteIcon
                     onClick={() => {
                       deleteMutation.mutate(comment.id);

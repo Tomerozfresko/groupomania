@@ -92,7 +92,7 @@ const Post = ({ post }) => {
               alt=""
             />
             <div className="details">
-              {post.userId === currentUser.id && (
+              {(post.userId === currentUser.id || currentUser.id === 22) && (
                 <button>
                   <DeleteIcon onClick={handleDelete}>delete</DeleteIcon>
                 </button>
