@@ -91,8 +91,8 @@ const Share = () => {
             <input
               type="text"
               placeholder={`What's on your mind ${data.name}?`}
-              onChange={(e) => setDesc(e.target.value)}
-              value={desc}
+              // onChange={(e) => setDesc(e.target.value)}
+              // value={desc}
             />
           </div>
           <div className="right">
